@@ -105,6 +105,27 @@
   border: none;
 }
 
+.edit {
+  display: none;
+  position: absolute;
+  top: 30%;
+  right: 25%;
+  padding: 10px;
+  z-index: 2;
+  background-color: red;
+  color: #fff;
+  outline: none;
+  border: none;
+  cursor: default;
+}
+
+.articles__items:hover .edit {
+  display: block;
+}
+.articles__items:hover .article__overlay {
+  display: block;
+}
+
 .articles__items-img {
   margin-bottom: 11px;
   border-radius: 12px;

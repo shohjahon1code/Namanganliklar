@@ -141,3 +141,18 @@
   color: white;
   border-color: #d30808;
 }
+
+.search-menu {
+  display: none;
+}
+
+#search {
+  padding: 10px;
+  border-radius: 10px;
+  outline: none;
+  border: none;
+}
+
+.search-active {
+  display: flex;
+}

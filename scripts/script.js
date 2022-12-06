@@ -4,6 +4,9 @@ const modal = document.querySelector(".addNews-modal");
 const elForm = document.querySelector(".forms");
 const elHeroArticles = document.querySelector(".hero__articles");
 const elFormBtns = elForm.querySelectorAll("button");
+const searchBtn = document.getElementById("search-btn");
+const elSearchMenu = document.querySelector(".search-menu");
+const elEditBtn = elForm.querySelector(".elform-btn");
 
 // adding backdrop to modal
 const toggleBackdrop = () => {
@@ -76,6 +79,7 @@ function renderNews(items) {
       .split("-")
       .join(".")}</span>
     <button class="articles__items-btn" data-id="${item.id}">Delete</button>
+    <p class="edit" data-id="${item.id}">Edit</p>
     <div class="article__overlay"></div>
     `;
 
@@ -148,14 +152,87 @@ elHeroArticles.addEventListener("click", (evt) => {
         }
       });
       news = fileredArray;
-      renderNews(fileredArray);
+      renderNews(news);
       const deleteModal = document.getElementById("delete-modal");
       deleteModal.classList.remove("active");
     });
   }
+
+  if (evt.target.matches(".edit")) {
+    showModal();
+    elEditBtn.textContent = "Change";
+    elEditBtn.type = "button";
+    const id = evt.target.dataset.id;
+
+    let title = elForm.title;
+    let url = elForm.url;
+    let time = elForm.time;
+    let date = elForm.date;
+    console.log(title);
+    news.forEach((item) => {
+      if (item.id === Number(id)) {
+        title.value = news[id].title;
+        url.value = news[id].img;
+        time.value = news[id].time;
+        date.value = news[id].date;
+        editHandler(id, title, url, time, date);
+      }
+    });
+    renderNews(news);
+  }
 });
 
+function editHandler(id, title, url, time, date) {
+  elEditBtn.addEventListener("click", () => {
+    news.forEach((item) => {
+      if (item.id === Number(id)) {
+        news[id].title = title.value;
+        news[id].title = url.value;
+        news[id].title = time.value;
+        news[id].title = date.value;
+      }
+      renderNews(news);
+    });
+  });
+}
+
+//search btn
+const searchBarOpen = () => {
+  elSearchMenu.classList.toggle("search-active");
+  searchBtn.style.display = "none";
+};
+
+window.addEventListener("click", (e) => {
+  if (!e.path.includes(elSearchMenu) && !e.path.includes(searchBtn)) {
+    elSearchMenu.classList.remove("search-active");
+    searchBtn.style.display = "block";
+  }
+  renderNews(news);
+});
+
+elSearchMenu.addEventListener("submit", (evt) => {
+  evt.preventDefault();
+  const elSearchInput = document.querySelector("#search");
+  const searchInputValue = elSearchInput.value.trim();
+  const elSearchReg = new RegExp(searchInputValue, "gi");
+  const filteredSearch = news.filter((item) => item.title.match(elSearchReg));
+
+  if (filteredSearch.length > 0) {
+    renderNews(filteredSearch);
+  } else {
+    alert("Write the Russian letter or not found please!!!");
+  }
+
+  elSearchInput.value = "";
+});
+
+searchBtn.addEventListener("click", searchBarOpen);
+
 renderNews(news);
+addModalNews.addEventListener("click", () => {
+  elEditBtn.textContent = "Add";
+  elEditBtn.type = "submit";
+});
 addModalNews.addEventListener("click", showModal);
 backdrop.addEventListener("click", backdropHandler);
 elForm.addEventListener("submit", (evt) => {

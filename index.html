@@ -43,7 +43,15 @@
             </li>
           </ul>
           <div class="header__links">
-            <a href="#!" class="header__links-btn">
+            <form class="search-menu">
+              <input
+                class="c"
+                type="search"
+                placeholder="Search..."
+                id="search"
+              />
+            </form>
+            <a href="#!" id="search-btn" class="header__links-btn">
               <img src="./images/lupa.png" alt="lupa" />
             </a>
             <a href="#!" class="header__links-btn2">
@@ -97,13 +105,18 @@
       <div class="addNews-modal">
         <form class="forms">
           <h2 style="color: white" class="forms__title">Add news Menu</h2>
-          <input id="title" type="text" placeholder="News Title..." />
-          <input id="url" type="url" placeholder="Image source..." />
-          <input id="time" type="time" placeholder="Time..." />
-          <input id="date" type="date" placeholder="Date..." />
+          <input
+            id="title"
+            name="title"
+            type="text"
+            placeholder="News Title..."
+          />
+          <input id="url" name="url" type="url" placeholder="Image source..." />
+          <input id="time" name="time" type="time" placeholder="Time..." />
+          <input id="date" name="date" type="date" placeholder="Date..." />
           <div>
             <button type="button">Cancel</button>
-            <button>Add</button>
+            <button class="elform-btn">Add</button>
           </div>
         </form>
       </div>
