@@ -1,15 +1,15 @@
-var isPalindrome = function (x) {
-  const strined = String(x);
-  const splitted = strined.split("");
-  const reversed = splitted.reverse();
-  const joined = reversed.join("");
-  if (joined == x) {
-    return joined;
-  } else if (x <= 0) {
-    return x;
-  } else {
-    return false;
-  }
-};
+function toCsvText(array) {
+  array.forEach(item=> {
+    item.join("\n")
+    return item
+  })
+}
 
-console.log(isPalindrome(0));
+console.log(
+  toCsvText([
+    [0, 1, 2, 3, 4],
+    [10, 11, 12, 13, 14],
+    [20, 21, 22, 23, 24],
+    [30, 31, 32, 33, 34],
+  ])
+);

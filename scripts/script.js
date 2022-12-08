@@ -7,6 +7,7 @@ const elFormBtns = elForm.querySelectorAll("button");
 const searchBtn = document.getElementById("search-btn");
 const elSearchMenu = document.querySelector(".search-menu");
 const elEditBtn = elForm.querySelector(".elform-btn");
+const elTabList = document.querySelector(".nav__list");
 
 // adding backdrop to modal
 const toggleBackdrop = () => {
@@ -44,12 +45,8 @@ const backdropHandler = () => {
   clearInputs();
 };
 
-function addZero(num) {
-  if (num < 10) {
-    return `0${num}`;
-  } else {
-    return num;
-  }
+function addHash(arr) {
+  arr.map((ar) => `# + ${arr}`);
 }
 
 //render the news
@@ -81,6 +78,7 @@ function renderNews(items) {
     <button class="articles__items-btn" data-id="${item.id}">Delete</button>
     <p class="edit" data-id="${item.id}">Edit</p>
     <div class="article__overlay"></div>
+    
     `;
 
     elHeroArticles.appendChild(elArticlesItems);
@@ -176,9 +174,9 @@ elHeroArticles.addEventListener("click", (evt) => {
         time.value = news[id].time;
         date.value = news[id].date;
         editHandler(id, title, url, time, date);
+        renderNews(news);
       }
     });
-    renderNews(news);
   }
 });
 
@@ -202,7 +200,7 @@ const searchBarOpen = () => {
   searchBtn.style.display = "none";
 };
 
-window.addEventListener("click", (e) => {
+window.addEventListener("change", (e) => {
   if (!e.path.includes(elSearchMenu) && !e.path.includes(searchBtn)) {
     elSearchMenu.classList.remove("search-active");
     searchBtn.style.display = "block";
@@ -241,3 +239,46 @@ elForm.addEventListener("submit", (evt) => {
   renderNews(news);
   clearInputs();
 });
+
+// tab categories//////////////////////////
+
+function renderTab(items) {
+  const categoryArr = [];
+
+  items.forEach((item) => {
+    item.categories.forEach((category) => {
+      if (!categoryArr.includes(category)) {
+        categoryArr.push(category);
+      }
+    });
+  });
+  categoryArr.forEach((category) => {
+    const list = document.createElement("li");
+    list.className = "nav__item";
+    const link = document.createElement("a");
+    link.className = "nav__link";
+    link.textContent = category;
+    link.style.cursor = "pointer";
+    list.appendChild(link);
+    elTabList.prepend(list);
+  });
+}
+
+elTabList.addEventListener("click", (evt) => {
+  const fileredArray = news.filter((item) =>
+    item.categories.includes(evt.target.textContent)
+  );
+  console.log(fileredArray);
+  console.log(evt.target.textContent);
+
+  if (fileredArray.length > 0) {
+    renderNews(fileredArray);
+  }
+  //
+
+  if (evt.target.textContent === "All") {
+    renderNews(news);
+  }
+});
+
+renderTab(news);
