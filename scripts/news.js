@@ -96,6 +96,6 @@ let news = [
     img: "https://storage.kun.uz/source/thumbnails/_medium/9/cd4EqmjbTfwQ_k-WR0ZIWAzKsrewrWV__medium.jpg",
     time: "05:28",
     date: "2022-05-06",
-    categories: ["siyosat", "jahon"],
+    categories: ["siyosat"],
   },
 ];
